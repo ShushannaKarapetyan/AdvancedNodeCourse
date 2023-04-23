@@ -9,6 +9,7 @@ const connection = require('./config/connection');
 require('./models/User');
 require('./models/Blog');
 require('./services/passport');
+require('./services/cache');
 
 const app = express();
 
