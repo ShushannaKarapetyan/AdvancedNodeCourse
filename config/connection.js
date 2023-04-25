@@ -8,4 +8,8 @@ module.exports = () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
+
+    mongoose.connection.on('error', (error) => {
+        console.error('error', error);
+    });
 }

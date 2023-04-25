@@ -2,9 +2,10 @@ const express = require('express');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const keys = require('./config/keys');
+const keys = require('../config/keys');
 const checkEnvironment = require('./middlewares/checkEnvironment');
-const connection = require('./config/connection');
+const connection = require('../config/connection');
+const PORT = process.env.PORT || 5001;
 
 require('./models/User');
 require('./models/Blog');
@@ -29,8 +30,6 @@ require('./routes/authRoutes')(app);
 require('./routes/blogRoutes')(app);
 
 app.use(checkEnvironment);
-
-const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Listening on port`, PORT);
