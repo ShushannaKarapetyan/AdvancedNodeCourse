@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('../config/keys');
 const checkEnvironment = require('./middlewares/checkEnvironment');
-const connection = require('../config/connection');
+const connectDB = require('../config/database/mongodb');
 const PORT = process.env.PORT || 5001;
 
 require('./models/User');
@@ -32,8 +33,18 @@ require('./routes/uploadRoutes')(app);
 
 app.use(checkEnvironment);
 
-app.listen(PORT, () => {
-    console.log(`Listening on port`, PORT);
+connectDB()
+    .then(() => {
+        console.log('Connected to the db.');
 
-    connection();
-});
+        connectServer();
+    })
+    .catch((error) => {
+        throw error;
+    });
+
+function connectServer() {
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`);
+    });
+}
