@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 module.exports = (req, res, next) => {
-    if (['production'].includes(process.env.NODE_ENV)) {
+    if (['production', 'ci'].includes(process.env.NODE_ENV)) {
         app.use(express.static('./client/build'));
 
         const path = require('path');
